@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DomZzz Auto Video Downloader</title>
 
-  <!-- iOS WebClip settings -->
+  <!-- iOS WebClip settings (use PNG only) -->
   <link rel="apple-touch-icon" href="/static/icon.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -20,13 +20,14 @@
     /* Sticky rainbow header */
     header { 
       position: sticky; top: 0; 
-      display: flex; align-items: center; justify-content: space-between; 
+      display: flex; align-items: center; justify-content: flex-start; 
       padding: 8px 12px; 
       background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet); 
       background-size: 400% 400%; 
       animation: rainbow 10s linear infinite; 
       color: white; font-weight: bold; font-size: 18px; 
       z-index: 1000;
+      position: relative;
     }
     @keyframes rainbow { 
       0%{background-position:0% 50%} 
@@ -34,13 +35,25 @@
     }
 
     header img { border-radius: 8px; }
-    header a img { transition: transform 0.2s; }
-    header a img:hover { transform: scale(1.2); }
 
+    /* Telegram top-right */
+    .telegram {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .telegram img {
+      height: 50px;
+      transition: transform 0.2s;
+    }
+    .telegram img:hover { transform: scale(1.2); }
+
+    /* Title + clock + donate */
     .title-box { display: flex; flex-direction: column; }
-    .clock { font-size: 14px; font-weight: normal; margin-top: 2px; }
-    .donate { font-size: 14px; margin-top: 4px; display: flex; align-items: center; gap: 8px; }
-    .donate img { height: 40px; border-radius: 6px; }
+    .clock { font-size: 22px; font-weight: bold; margin-top: 4px; }
+    .donate { font-size: 14px; margin-top: 6px; display: flex; align-items: center; gap: 8px; }
+    .donate img { height: 45px; border-radius: 6px; }
 
     .container { padding: 16px; }
     textarea { width: 100%; height: 100px; font-size: 16px; border-radius: 8px; padding: 8px; }
@@ -59,11 +72,11 @@
       header { flex-direction: column; align-items: flex-start; font-size: 16px; }
       header div { margin-bottom: 8px; }
       header img { height: 40px; }
-      header a img { height: 32px; }
+      .telegram img { height: 40px; }
+      .clock { font-size: 18px; }
+      .donate img { height: 35px; }
       button { font-size: 15px; }
       textarea { font-size: 14px; }
-      .clock { font-size: 13px; }
-      .donate img { height: 32px; }
     }
   </style>
 </head>
@@ -83,9 +96,11 @@
         </div>
       </div>
     </div>
-    <a href="https://t.me/domunlocked" target="_blank">
-      <img src="/static/telegram.png" alt="Telegram" style="height:40px;">
-    </a>
+    <div class="telegram">
+      <a href="https://t.me/domunlocked" target="_blank">
+        <img src="/static/telegram.png" alt="Telegram">
+      </a>
+    </div>
   </header>
 
   <div class="container">
@@ -101,7 +116,6 @@
     function updateClock() {
       const clockEl = document.getElementById("clock");
       const now = new Date();
-      // Convert to UTC then add 7 hours
       const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
       const phnomPenh = new Date(utc + (7 * 60 * 60000));
 
@@ -110,12 +124,12 @@
       const seconds = phnomPenh.getSeconds().toString().padStart(2, "0");
       const ampm = hours >= 12 ? "PM" : "AM";
       hours = hours % 12;
-      hours = hours ? hours : 12; // 12-hour format
+      hours = hours ? hours : 12;
 
       clockEl.innerText = `${hours}:${minutes}:${seconds} ${ampm}`;
     }
     setInterval(updateClock, 1000);
-    updateClock(); // initial call
+    updateClock();
 
     // Downloader
     function startDownload(type) {

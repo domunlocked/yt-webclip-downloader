@@ -6,8 +6,32 @@
   <title>DomZzz Auto Video Downloader</title>
   <style>
     body { font-family: "Khmer OS Battambang", sans-serif; background: #fff; margin: 0; padding: 0; }
-    header { padding: 12px; text-align: center; font-size: 18px; font-weight: bold; color: white; background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet); background-size: 400% 400%; animation: rainbow 10s linear infinite; }
-    @keyframes rainbow { 0%{background-position:0% 50%} 100%{background-position:100% 50%} }
+
+    /* Sticky rainbow header */
+    header { 
+      position: sticky; 
+      top: 0; 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      padding: 10px; 
+      background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet); 
+      background-size: 400% 400%; 
+      animation: rainbow 10s linear infinite; 
+      color: white; 
+      font-weight: bold; 
+      font-size: 18px; 
+      z-index: 1000;
+    }
+    @keyframes rainbow { 
+      0%{background-position:0% 50%} 
+      100%{background-position:100% 50%} 
+    }
+
+    header img { border-radius: 8px; }
+    header a img { transition: transform 0.2s; }
+    header a img:hover { transform: scale(1.2); }
+
     .container { padding: 16px; }
     textarea { width: 100%; height: 100px; font-size: 16px; }
     button { font-size: 16px; padding: 10px 20px; margin: 5px; border: none; border-radius: 8px; cursor: pointer; }
@@ -19,7 +43,17 @@
   </style>
 </head>
 <body>
-  <header>DomZzz Auto Video Downloader</header>
+  <!-- Sticky header with logo + Telegram -->
+  <header>
+    <div style="display:flex; align-items:center;">
+      <img src="/static/logo.jpg" alt="App Logo" style="height:50px; margin-right:10px;">
+      <span>DomZzz Auto Video Downloader</span>
+    </div>
+    <a href="https://t.me/domunlocked" target="_blank">
+      <img src="/static/telegram.png" alt="Telegram" style="height:40px;">
+    </a>
+  </header>
+
   <div class="container">
     <label>បញ្ចូលតំណ (Link) មួយឬច្រើន៖</label><br>
     <textarea id="urls" placeholder="Paste YouTube links here..."></textarea><br>
